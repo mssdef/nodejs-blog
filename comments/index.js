@@ -1,13 +1,16 @@
  const express = require('express');
  const bodyParser = require('body-parser');
  const { randomBytes } = require('crypto');
+ const cors = require('cors');
 
  const app = express();
  app.use(bodyParser.json());
+ app.use(cors());
 
  const commentsByPostId = {};
 
  app.get('/posts/:id/comments', (req, res) => {
+   console.log('posts-comments-list', req);
    res.send(commentsByPostId[req.params.id] || []);
  });
 
@@ -15,6 +18,7 @@
    const id = randomBytes(4).toString('hex');
 
    const { content }  = req.body;
+   console.log('posts-comments-create', content);
 
    const comments = commentsByPostId[req.params.id] || [];
 
