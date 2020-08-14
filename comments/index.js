@@ -11,7 +11,7 @@
  const commentsByPostId = {};
 
  app.get('/posts/:id/comments', (req, res) => {
-   console.log('posts-comments-list', req);
+   // console.log('posts-comments-list');
    res.send(commentsByPostId[req.params.id] || []);
  });
 
@@ -19,7 +19,7 @@
    const id = randomBytes(4).toString('hex');
 
    const { content }  = req.body;
-   console.log('posts-comments-create', content);
+   console.log('posts-comments-create');
 
    const comments = commentsByPostId[req.params.id] || [];
 
@@ -37,6 +37,12 @@
 
    res.status(201).send(comments);
  });
+
+ app.post('/events', async(req, res) => {
+   console.log('comments-received-event', req.body.type);
+   res.send({});
+ });
+
 
  app.listen(4001, () => {
    console.log('listen on 4001 port');
